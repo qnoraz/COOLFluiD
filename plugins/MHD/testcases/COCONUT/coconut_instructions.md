@@ -39,7 +39,7 @@ dos2unix install_COOLFluiD.sh
 
 **Note:** The installation usually takes time and should not be interrupted. In case you can not wait for that long, or you don't trust your stable internet connection you can run it in the background with the following command (the installation options can be modified according to your preferences, the only difference is nohup and &)
 ```
-nohup /install_COOLFluiD.sh DEBUG_NOCUDA --download=2 &
+nohup ./install_COOLFluiD.sh DEBUG_NOCUDA --download=2 &
 ```
 
 This will create a nohup.out file where you can monitor the installation process and you can also log out without interrupting the installation.
@@ -49,6 +49,7 @@ This will create a nohup.out file where you can monitor the installation process
  After the installation is over, go to ~/COCONUT/Dipole folder and follow the instructions on how to run a testcase:
 https://github.com/andrealani/COOLFluiD/wiki/HOWTO-run-a-testcase
 If you successfully link the coolfluid solvers in your folder, you will have 3 files in your directory: _coolfluid-solver.xml, coolfluid-solver-wrapper, coolfluid-solver_.
+NB: double check you actually take these files from `basebuild_dir/BUILD_MODE/apps/Solver/`, not `basebuild_dir/apps/Solver/`.
 
 After this the testcase can be run. The description of the necessary files are given in COCONUT_manual.pdf that can be found in this directory. You main file where you set up the boundary conditions, mesh, cfl and all the other settings is a .CFcase file. In the testcase all the paths are setup correctly. Here is an example job script to submit to the cluster to run the first testcase. These scripts are only for Genius and Hortense clusters. If you are using another cluster you can follow the example and change the paths and modules available to you.
 
@@ -75,7 +76,7 @@ module load CMake/3.26.3-GCCcore-12.3.0
 module load PETSc/3.20.3-foss-2023a
 export OMP_NUM_THREADS=1
 
-mpirun -np 144 ./path-to-COCONUT-dir/COCONUT/Dipole/map_TEST.CFcase
+mpirun -np 144 ./coolfluid-solver --scase path-to-COCONUT-dir/COCONUT/Dipole/map_TEST.CFcase
 
 ```
 
